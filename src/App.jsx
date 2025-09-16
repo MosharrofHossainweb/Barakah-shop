@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router-dom';
 import Home from './component/pages/Home';
 import ManProduct from './component/pages/ManProduct';
 import WemenProduct from './component/pages/WemenProduct';
@@ -15,16 +15,17 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/home" element={<Home/>} />
-        <Route path="man-product" element={<ManProduct />} />
-        <Route path="wemen-product" element={<WemenProduct />} />
-        <Route path="kids" element={<Kids />} />
-        <Route path="newArrival" element={<NewArrival />} />
-        <Route path="showpie" element={<Showpie />} />
-        <Route path="organic" element={<Organic />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="bestselling" element={<BestsellingProdduct />} />
-        <Route path="offer" element={<Offer />} />
+        <Route path="/" element={<Home />} /> {/* Root route */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/man-product" element={<ManProduct />} />
+        <Route path="/wemen-product" element={<WemenProduct />} />
+        <Route path="/kids" element={<Kids />} />
+        <Route path="/new-arrival" element={<NewArrival />} />
+        <Route path="/showpie" element={<Showpie />} />
+        <Route path="/organic" element={<Organic />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/bestselling" element={<BestsellingProdduct />} />
+        <Route path="/offer" element={<Offer />} />
       </Routes>
     </>
   );

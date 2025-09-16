@@ -1,13 +1,16 @@
-import React from 'react'
-import Navber from '../Navber/Navber'
+
+import Banner from '../Banner/Banner';
+import Navber from '../Navber/Navber';
 
 const Home = () => {
+  
+
   return (
     <>
-  
-    <Navber/>
+      <Navber />
+      <Banner/>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

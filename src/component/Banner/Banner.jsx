@@ -14,7 +14,8 @@ const Banner = () => {
   ];
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-2 md:px-4 lg:px-6 py-4">
+    
+    <div className="w-full  max-w-7xl mx-auto px-2 md:px-4 lg:px-6 py-4">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

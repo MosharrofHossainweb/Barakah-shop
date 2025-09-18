@@ -16,7 +16,7 @@ const data = [
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYlWS59Bi9SOPUnCB4A9T5bBBYBKPT0zoi1w&s",
     "image2": "https://shelai.com.bd/public/uploads/all/TOeCJ.webp",
     "image3": "https://shelai.com.bd/public/uploads/all/cYcEA.webp",
-    "video": "https://youtu.be/KpfP_VjLI9M?si=FGeyuYS1zqDxrier",
+    "video": "https://www.youtube.com/embed/eIkvJdGCFqs",
     "discount": true,
     "discount_price": 1800
   },
@@ -36,7 +36,7 @@ const data = [
     "price_in_tk": 7600,
     "image": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/DSC06446_e694bd60-3e97-4f58-9ec8-d5c29a1a3575_540x.jpg?v=1757835672",
     "image2": "https://cdn.shopify.com/s/files/1/0305/5789/6843/files/SOME_OTHER_IMAGE_LINK",
-    "video": "https://www.youtube.com/embed/xvFZjo5PgG0",
+    "video": "https://www.youtube.com/embed/KdxvBcuUumw",
     "discount": false,
     "discount_price": 7600
   },

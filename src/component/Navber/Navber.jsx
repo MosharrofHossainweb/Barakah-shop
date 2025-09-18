@@ -14,17 +14,19 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { NavLink } from 'react-router-dom';
 
+// ✅ Updated pages with correct paths
 const pages = [
-  'home',
-  'man-product',
-  'wemen-product',
-  'kids',
-  'bestselling',
-  'offer',
-  'organic',
-  'showpie',
-  'contact',
+  { label: 'Home', path: '/home' },
+  { label: 'Men', path: '/menproductfilter' },
+  { label: 'Women', path: '/wemen-product' },
+  { label: 'Kids', path: '/kids' },
+  { label: 'Bestselling', path: '/bestselling' },
+  { label: 'Offer', path: '/offer' },
+  { label: 'Organic', path: '/organic' },
+  { label: 'Showpiece', path: '/showpiece' },
+  { label: 'Contact', path: '/contact' },
 ];
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navber() {
@@ -55,7 +57,7 @@ function Navber() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -69,6 +71,7 @@ function Navber() {
             LOGO
           </Typography>
 
+          {/* Mobile Menu */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -97,50 +100,44 @@ function Navber() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <NavLink key={page} to={`/${page}`}>
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                <NavLink
+                  key={page.label}
+                  to={page.path}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography sx={{ textAlign: 'center' }}>
+                      {page.label}
+                    </Typography>
                   </MenuItem>
                 </NavLink>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+
+          {/* Desktop Menu */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <NavLink key={page} to={`/${page}`}>
+              <NavLink
+                key={page.label}
+                to={page.path}
+                style={{ textDecoration: 'none' }}
+              >
                 <Button
-                  key={page}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {page}
+                  {page.label}
                 </Button>
               </NavLink>
             ))}
           </Box>
+
+          {/* Avatar & Settings Menu */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -161,9 +158,7 @@ function Navber() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>
-                    {setting}
-                  </Typography>
+                  <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -173,4 +168,5 @@ function Navber() {
     </AppBar>
   );
 }
+
 export default Navber;

@@ -11,6 +11,8 @@ import BestsellingProdduct from './component/pages/BestsellingProdduct';
 import Offer from './component/pages/Offer';
 import ProductDetailsPage from './component/pages/ProductDetailsPage';
 import MenProductFilter from './component/pages/MenProductFilter';
+import "./index.css"
+
 
 const App = () => {
   return (
@@ -29,6 +31,7 @@ const App = () => {
         <Route path="/offer" element={<Offer />} />
 
         {/* ✅ Product Details Dynamic Route */}
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
       </Routes>
     </>

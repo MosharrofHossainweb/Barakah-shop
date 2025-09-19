@@ -11,7 +11,7 @@ const data = [
     "sleeve_length": "Full",
     "occasion": "Casual / Jummah",
     "price_in_tk": 1800,
-    "image": "https://static-01.daraz.com.bd/p/0cb12cbdcd6d8f76c6d8f3099d0d21fc.jpg",
+    "image": "https://sadakalo.net/wp-content/uploads/2024/02/Classic-Looking-Black-Color-Cotton-Panjabi-for-Ekushe-February-scaled.jpg",
     "video": "https://www.youtube.com/embed/aBcDeFgH01",
     "discount": true,
     "discount_price": 1500

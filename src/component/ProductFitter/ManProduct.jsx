@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import kidsData from "../../DB//kidsData";
+import menData from "../../DB/MenDb";
 import Navber from "../Navber/Navber";
 import { useThemeContext } from "../../context/ThemeProvider";
 
-const Kids = () => {
+const ManProduct = () => {
   const { mode } = useThemeContext();
   const [filters, setFilters] = useState({
     fabric: "All",
@@ -14,15 +14,15 @@ const Kids = () => {
   });
 
   const applyFilters = () => {
-    return kidsData.filter(item => {
+    return menData.filter(item => {
       const matchFabric = filters.fabric === "All" || item.fabric === filters.fabric;
       const matchColor = filters.color === "All" || item.color === filters.color;
       const matchDiscount = !filters.discount || item.discount;
       const matchPrice =
         filters.priceRange === "All" ||
-        (filters.priceRange === "low" && item.price_in_tk < 1000) ||
-        (filters.priceRange === "mid" && item.price_in_tk >= 1000 && item.price_in_tk <= 2000) ||
-        (filters.priceRange === "high" && item.price_in_tk > 2000);
+        (filters.priceRange === "low" && item.price_in_tk < 1500) ||
+        (filters.priceRange === "mid" && item.price_in_tk >= 1500 && item.price_in_tk <= 3000) ||
+        (filters.priceRange === "high" && item.price_in_tk > 3000);
       return matchFabric && matchColor && matchDiscount && matchPrice;
     });
   };
@@ -40,15 +40,15 @@ const Kids = () => {
 
   return (
     <>
-      <Navber />
+      
       <div className={`${mode === "dark" ? "bg-gray-900" : "bg-gray-100"} container mx-auto py-10`}>
         {/* Section Heading */}
         <div className="text-center mb-10">
           <h1 className={`text-4xl font-extrabold tracking-wide uppercase ${mode === "light" ? "text-gray-800" : "text-gray-100"}`}>
-            Kids Collection
+            Men’s Panjabi Collection
           </h1>
           <p className={`text-lg mt-2 ${textColor}`}>
-            Explore stylish and comfortable clothing for kids of all ages.
+            Explore elegant Panjabis and traditional wear for every occasion.
           </p>
           <div className="w-28 h-1 bg-blue-700 mx-auto mt-4 rounded-full"></div>
         </div>
@@ -86,7 +86,7 @@ const Kids = () => {
                 <option value="Black">Black</option>
                 <option value="Blue">Blue</option>
                 <option value="Green">Green</option>
-                <option value="Red">Red</option>
+                <option value="Maroon">Maroon</option>
               </select>
             </div>
 
@@ -99,9 +99,9 @@ const Kids = () => {
                 className="px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-600 outline-none bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
               >
                 <option value="All">All Prices</option>
-                <option value="low">Below 1000৳</option>
-                <option value="mid">1000৳ - 2000৳</option>
-                <option value="high">Above 2000৳</option>
+                <option value="low">Below 1500৳</option>
+                <option value="mid">1500৳ - 3000৳</option>
+                <option value="high">Above 3000৳</option>
               </select>
             </div>
 
@@ -172,4 +172,4 @@ const Kids = () => {
   );
 };
 
-export default Kids;
+export default ManProduct;

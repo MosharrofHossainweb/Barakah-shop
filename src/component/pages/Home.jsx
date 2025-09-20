@@ -1,9 +1,10 @@
-
 import Banner from '../Banner/Banner';
 import Navber from '../Navber/Navber';
 import Product from '../Product/Product';
 import React from "react";
 import SpecialProducts from '../SpecialProduct/SpecialProducts';
+import Contact from './Contact';
+import ContactCom from '../Contact/ContactCom';
 const Home = () => {
   
  const specialItems = [
@@ -36,6 +37,7 @@ const Home = () => {
       <Banner/>
       <Product/>
       <SpecialProducts specialItems={specialItems}/>
+      <ContactCom/>
      
     </>
   );

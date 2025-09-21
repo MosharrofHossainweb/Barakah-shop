@@ -30,8 +30,8 @@ const App = () => {
         <Route path="/showpiece" element={<Showpie />} />
         <Route path="/organic" element={<Organic />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/bestselling" element={<BestsellingProdduct />} />
-        <Route path="/offer" element={<Offer />} />
+        {/* <Route path="/bestselling" element={<BestsellingProdduct />} />
+        <Route path="/offer" element={<Offer />} /> */}
 
         {/* ✅ Product Details + Order Pages */}
         <Route path="/product/:id" element={<ProductDetailsPage />} />

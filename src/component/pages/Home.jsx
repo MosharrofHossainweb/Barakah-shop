@@ -5,6 +5,7 @@ import React from "react";
 import SpecialProducts from '../SpecialProduct/SpecialProducts';
 import Contact from './Contact';
 import ContactCom from '../Contact/ContactCom';
+import ShowpieceProduct from '../Showpiece/ShowpieceProduct';
 const Home = () => {
   
  const specialItems = [
@@ -36,6 +37,7 @@ const Home = () => {
       <Navber />
       <Banner/>
       <Product/>
+      <ShowpieceProduct/>
       <SpecialProducts specialItems={specialItems}/>
       <ContactCom/>
      

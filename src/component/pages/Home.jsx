@@ -6,6 +6,7 @@ import SpecialProducts from '../SpecialProduct/SpecialProducts';
 import Contact from './Contact';
 import ContactCom from '../Contact/ContactCom';
 import ShowpieceProduct from '../Showpiece/ShowpieceProduct';
+import OrganicProduct from '../Product/OrganicProduct';
 const Home = () => {
   
  const specialItems = [
@@ -39,7 +40,9 @@ const Home = () => {
       <Product/>
       <ShowpieceProduct/>
       <SpecialProducts specialItems={specialItems}/>
+      <OrganicProduct/>
       <ContactCom/>
+      
      
     </>
   );

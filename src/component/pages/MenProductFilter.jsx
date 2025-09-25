@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import menData from "../../DB/MenDb";
 import Navber from "../Navber/Navber";
 import { useThemeContext } from "../../context/ThemeProvider";
+import { IoClose, IoFilter } from "react-icons/io5";
 
 const MenProductFilter = () => {
   const { mode } = useThemeContext();
@@ -12,6 +13,8 @@ const MenProductFilter = () => {
     discount: false,
     priceRange: "All",
   });
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const applyFilters = () => {
     return menData.filter(item => {
@@ -28,7 +31,6 @@ const MenProductFilter = () => {
   };
 
   const filteredData = applyFilters();
-
   const clearFilters = () =>
     setFilters({ fabric: "All", color: "All", discount: false, priceRange: "All" });
 
@@ -43,7 +45,7 @@ const MenProductFilter = () => {
       <Navber />
       <div className={`${mode === "dark" ? "bg-gray-900" : "bg-gray-100"} container mx-auto py-10`}>
         {/* Section Heading */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <h1 className={`text-4xl font-extrabold tracking-wide uppercase ${mode === "light" ? "text-gray-800" : "text-gray-100"}`}>
             Men’s Panjabi Collection
           </h1>
@@ -53,15 +55,36 @@ const MenProductFilter = () => {
           <div className="w-28 h-1 bg-blue-700 mx-auto mt-4 rounded-full"></div>
         </div>
 
-        {/* Filter Panel */}
-        <div className={`${cardBg} border shadow-md rounded-2xl p-6 mb-10 max-w-4xl mx-auto`}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {/* Fabric Filter */}
+        {/* Mobile Filter Button */}
+        <div className="flex justify-end mb-4 md:hidden">
+          <button
+            onClick={() => setIsDrawerOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded-lg"
+          >
+            <IoFilter size={20} />
+            Filter
+          </button>
+        </div>
+
+        {/* Filter Drawer for Mobile */}
+        <div
+          className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-800 shadow-lg z-50 transform transition-transform duration-300 ${
+            isDrawerOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex justify-between items-center p-4 border-b">
+            <h2 className="font-semibold text-lg text-gray-800 dark:text-gray-100">Filters</h2>
+            <button onClick={() => setIsDrawerOpen(false)}>
+              <IoClose size={24} className="text-gray-800 dark:text-gray-100" />
+            </button>
+          </div>
+          <div className="p-4 flex flex-col gap-4">
+            {/* Fabric */}
             <div className="flex flex-col">
               <label className={`text-sm font-semibold mb-1 ${textColor}`}>Fabric</label>
               <select
                 value={filters.fabric}
-                onChange={(e) => setFilters((prev) => ({ ...prev, fabric: e.target.value }))}
+                onChange={(e) => setFilters(prev => ({ ...prev, fabric: e.target.value }))}
                 className="px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-600 outline-none bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
               >
                 <option value="All">All Fabrics</option>
@@ -73,12 +96,12 @@ const MenProductFilter = () => {
               </select>
             </div>
 
-            {/* Color Filter */}
+            {/* Color */}
             <div className="flex flex-col">
               <label className={`text-sm font-semibold mb-1 ${textColor}`}>Color</label>
               <select
                 value={filters.color}
-                onChange={(e) => setFilters((prev) => ({ ...prev, color: e.target.value }))}
+                onChange={(e) => setFilters(prev => ({ ...prev, color: e.target.value }))}
                 className="px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-600 outline-none bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
               >
                 <option value="All">All Colors</option>
@@ -90,12 +113,12 @@ const MenProductFilter = () => {
               </select>
             </div>
 
-            {/* Price Range Filter */}
+            {/* Price Range */}
             <div className="flex flex-col">
               <label className={`text-sm font-semibold mb-1 ${textColor}`}>Price Range</label>
               <select
                 value={filters.priceRange}
-                onChange={(e) => setFilters((prev) => ({ ...prev, priceRange: e.target.value }))}
+                onChange={(e) => setFilters(prev => ({ ...prev, priceRange: e.target.value }))}
                 className="px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-600 outline-none bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
               >
                 <option value="All">All Prices</option>
@@ -105,24 +128,107 @@ const MenProductFilter = () => {
               </select>
             </div>
 
-            {/* Discount Checkbox + Clear Button */}
-            <div className="flex flex-col justify-center gap-3">
-              <label className={`flex items-center gap-2 text-sm font-semibold ${textColor}`}>
-                <input
-                  type="checkbox"
-                  checked={filters.discount}
-                  onChange={(e) => setFilters((prev) => ({ ...prev, discount: e.target.checked }))}
-                  className="w-4 h-4 accent-blue-700"
-                />
-                Discount Only
-              </label>
+            {/* Discount */}
+            <label className={`flex items-center gap-2 text-sm font-semibold ${textColor}`}>
+              <input
+                type="checkbox"
+                checked={filters.discount}
+                onChange={(e) => setFilters(prev => ({ ...prev, discount: e.target.checked }))}
+                className="w-4 h-4 accent-blue-700"
+              />
+              Discount Only
+            </label>
 
-              <button
-                onClick={clearFilters}
-                className="px-4 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition-all duration-300"
-              >
-                Clear Filters
-              </button>
+            {/* Clear */}
+            <button
+              onClick={clearFilters}
+              className="px-4 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition-all duration-300"
+            >
+              Clear Filters
+            </button>
+          </div>
+        </div>
+
+        {/* Overlay */}
+        {isDrawerOpen && (
+          <div
+            onClick={() => setIsDrawerOpen(false)}
+            className="fixed inset-0 bg-black bg-opacity-40 z-40"
+          ></div>
+        )}
+
+        {/* Desktop Filter Panel */}
+        <div className="hidden md:block mb-6">
+          <div className={`${cardBg} border shadow-md rounded-2xl p-6 max-w-4xl mx-auto`}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              {/* Fabric Filter */}
+              <div className="flex flex-col">
+                <label className={`text-sm font-semibold mb-1 ${textColor}`}>Fabric</label>
+                <select
+                  value={filters.fabric}
+                  onChange={(e) => setFilters(prev => ({ ...prev, fabric: e.target.value }))}
+                  className="px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-600 outline-none bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
+                >
+                  <option value="All">All Fabrics</option>
+                  <option value="Cotton">Cotton</option>
+                  <option value="Linen">Linen</option>
+                  <option value="Khadi">Khadi</option>
+                  <option value="Silk Blend">Silk Blend</option>
+                  <option value="Viscose">Viscose</option>
+                </select>
+              </div>
+
+              {/* Color Filter */}
+              <div className="flex flex-col">
+                <label className={`text-sm font-semibold mb-1 ${textColor}`}>Color</label>
+                <select
+                  value={filters.color}
+                  onChange={(e) => setFilters(prev => ({ ...prev, color: e.target.value }))}
+                  className="px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-600 outline-none bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
+                >
+                  <option value="All">All Colors</option>
+                  <option value="White">White</option>
+                  <option value="Black">Black</option>
+                  <option value="Blue">Blue</option>
+                  <option value="Green">Green</option>
+                  <option value="Maroon">Maroon</option>
+                </select>
+              </div>
+
+              {/* Price Filter */}
+              <div className="flex flex-col">
+                <label className={`text-sm font-semibold mb-1 ${textColor}`}>Price Range</label>
+                <select
+                  value={filters.priceRange}
+                  onChange={(e) => setFilters(prev => ({ ...prev, priceRange: e.target.value }))}
+                  className="px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-600 outline-none bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
+                >
+                  <option value="All">All Prices</option>
+                  <option value="low">Below 1500৳</option>
+                  <option value="mid">1500৳ - 3000৳</option>
+                  <option value="high">Above 3000৳</option>
+                </select>
+              </div>
+
+              {/* Discount + Clear */}
+              <div className="flex flex-col justify-center gap-3">
+                <label className={`flex items-center gap-2 text-sm font-semibold ${textColor}`}>
+                  <input
+                    type="checkbox"
+                    checked={filters.discount}
+                    onChange={(e) => setFilters(prev => ({ ...prev, discount: e.target.checked }))}
+                    className="w-4 h-4 accent-blue-700"
+                  />
+                  Discount Only
+                </label>
+
+                <button
+                  onClick={clearFilters}
+                  className="px-4 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition-all duration-300"
+                >
+                  Clear Filters
+                </button>
+              </div>
             </div>
           </div>
         </div>

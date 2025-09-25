@@ -5,7 +5,7 @@ import WemenProduct from "./component/pages/WemenProduct";
 import Kids from "./component/pages/Kids";
 import NewArrival from "./component/pages/NewArrival";
 import Showpie from "./component/pages/Showpie";
-import Organic from "./component/pages/Organic";
+import OrganicProduct from "./component/Product/OrganicProduct"; // ✅ Updated Import
 import Contact from "./component/pages/Contact";
 import BestsellingProdduct from "./component/pages/BestsellingProdduct";
 import Offer from "./component/pages/Offer";
@@ -28,7 +28,7 @@ const App = () => {
         <Route path="/kids" element={<Kids />} />
         <Route path="/new-arrival" element={<NewArrival />} />
         <Route path="/showpiece" element={<Showpie />} />
-        <Route path="/organic" element={<Organic />} />
+        <Route path="/organic" element={<OrganicProduct />} /> {/* ✅ Updated Route */}
         <Route path="/contact" element={<Contact />} />
         {/* <Route path="/bestselling" element={<BestsellingProdduct />} />
         <Route path="/offer" element={<Offer />} /> */}

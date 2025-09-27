@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 
 const Banner = () => {
   const images = [
-    "/images/fourwemen.png",
+    "/public/images/bannerimage.png",
     "/images/threewemen.png",
     "/images/fourwemen.png",
   ];
@@ -22,10 +22,8 @@ const Banner = () => {
           delay: 3000,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
+        pagination={{ clickable: true }}
+        navigation
         modules={[Autoplay, Pagination, Navigation]}
         className="rounded-2xl shadow-lg h-full"
       >
@@ -34,7 +32,7 @@ const Banner = () => {
             <img
               src={img}
               alt={`Banner ${index + 1}`}
-              className="w-full h-full object-cover rounded-2xl"
+              className="w-full h-full object-cover object-center rounded-2xl"
             />
           </SwiperSlide>
         ))}

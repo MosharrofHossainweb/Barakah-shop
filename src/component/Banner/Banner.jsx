@@ -1,4 +1,3 @@
-// Banner.jsx
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -8,7 +7,7 @@ import "swiper/css/navigation";
 
 const Banner = () => {
   const images = [
-    "/public/images/bannerimage.png",
+    "/images/bannerimage.png",
     "/images/threewemen.png",
     "/images/fourwemen.png",
   ];
@@ -32,6 +31,7 @@ const Banner = () => {
             <img
               src={img}
               alt={`Banner ${index + 1}`}
+              loading="lazy" // ✅ Lazy loading added
               className="w-full h-full object-cover object-center rounded-2xl"
             />
           </SwiperSlide>

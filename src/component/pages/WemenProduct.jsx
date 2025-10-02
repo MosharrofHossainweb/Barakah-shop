@@ -7,7 +7,7 @@ const WemenProduct = () => {
     <div>
       <Navber />
       <ProductFilter />
-      WemenProduct</div>
+    </div>
   )
 }
 

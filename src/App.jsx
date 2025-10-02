@@ -13,6 +13,7 @@ import ProductDetailsPage from "./component/pages/ProductDetailsPage";
 import MenProductFilter from "./component/pages/MenProductFilter";
 import OrderPage from "./component/pages/OrderPage";
 import "./index.css";
+import Organic from "./component/pages/Organic";
 
 const App = () => {
   return (
@@ -28,7 +29,7 @@ const App = () => {
         <Route path="/kids" element={<Kids />} />
         <Route path="/new-arrival" element={<NewArrival />} />
         <Route path="/showpiece" element={<Showpie />} />
-        <Route path="/organic" element={<OrganicProduct />} /> {/* ✅ Updated Route */}
+        <Route path="/organic" element={<Organic />} /> {/* ✅ Updated Route */}
         <Route path="/contact" element={<Contact />} />
         {/* <Route path="/bestselling" element={<BestsellingProdduct />} />
         <Route path="/offer" element={<Offer />} /> */}

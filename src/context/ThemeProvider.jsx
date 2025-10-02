@@ -29,11 +29,11 @@ export const ThemeProvider = ({ children }) => {
         mode,
         background: {
           default: isLight ? "#f5f5f5" : "#121212",
-          paper: isLight ? "#fff" : "#1E1E1E",
+          paper: isLight ? "#ffffff" : "#1E1E1E",
         },
         text: {
-          primary: isLight ? "#000" : "#fff",
-          secondary: isLight ? "#333" : "#BDBDBD",
+          primary: isLight ? "#1A1A1A" : "#FFFFFF",
+          secondary: isLight ? "#4F4F4F" : "#BDBDBD",
         },
       },
       components: {
@@ -48,7 +48,10 @@ export const ThemeProvider = ({ children }) => {
         },
         MuiButton: { styleOverrides: { root: { textTransform: "none" } } },
         MuiTypography: {
-          styleOverrides: { root: { color: isLight ? "#000" : "#fff" } },
+          styleOverrides: {
+            // এখানে global color override নাই
+            // চাইলে আলাদা variant customize করতে পারো
+          },
         },
       },
       typography: { fontFamily: "Roboto, Arial, sans-serif" },

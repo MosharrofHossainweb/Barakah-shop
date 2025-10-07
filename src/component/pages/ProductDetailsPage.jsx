@@ -24,14 +24,15 @@ const ProductDetailsPage = () => {
 
   const [mainImage, setMainImage] = useState(productImages[0]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
 
   if (!product)
     return (
       <p
-        className={`${isLight ? "text-gray-800" : "text-gray-100"} text-center mt-10`}
+        className={`${
+          isLight ? "text-gray-800" : "text-gray-100"
+        } text-center mt-10`}
       >
         Product not found
       </p>
@@ -42,21 +43,21 @@ const ProductDetailsPage = () => {
     : "https://www.youtube.com/embed/KdxvBcuUumw?autoplay=1";
 
   const handleBuyNow = () => {
-    if (!size) {
-      alert("Please select a size!");
-      return;
-    }
     if (!color) {
       alert("Please select a color!");
       return;
     }
-    navigate("/order", { state: { product, size, color, quantity } });
+    navigate("/order", { state: { product, color, quantity } });
   };
 
   return (
     <>
       <Navber />
-      <div className={`${isLight ? "bg-gray-100" : "bg-gray-900"} min-h-screen`}>
+      <div
+        className={`${
+          isLight ? "bg-gray-100" : "bg-gray-900"
+        } min-h-screen text-gray-800 dark:text-gray-100`}
+      >
         <div className="container mx-auto px-5 md:px-0 flex flex-col lg:flex-row gap-10 py-10">
           {/* Left: Images + Video */}
           <div className="lg:w-1/2 flex flex-col gap-6">
@@ -76,7 +77,7 @@ const ProductDetailsPage = () => {
                     src={img}
                     alt={`thumb-${idx}`}
                     className={`w-20 h-20 object-cover rounded-lg cursor-pointer flex-shrink-0 border-2 ${
-                      mainImage === img ? "border-blue-600" : "border-transparent"
+                      mainImage === img ? "border-blue-600" : "border-gray-300 dark:border-gray-600"
                     }`}
                     onClick={() => setMainImage(img)}
                   />
@@ -134,20 +135,27 @@ const ProductDetailsPage = () => {
           </div>
 
           {/* Right: Product Details */}
-          <div className="lg:w-1/2 flex flex-col gap-4 text-gray-900 dark:text-gray-100">
+          <div className="lg:w-1/2 flex flex-col gap-4">
             <h1 className="text-3xl font-bold">{product.product_name}</h1>
-            <p className="text-lg">
-              Brand: <span className="text-blue-500">{product.brand}</span>
-            </p>
-            <p>
-              Fabric: <span className="text-blue-500">{product.fabric}</span>
-            </p>
-            <p>
-              Type: <span className="text-blue-500">{product.set_type}</span>
-            </p>
-            <p>
-              Color: <span className="text-blue-500">{product.color}</span>
-            </p>
+
+            <div className="space-y-1 text-base">
+              <p>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">Brand:</span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">{product.brand}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">Fabric:</span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">{product.fabric}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">Type:</span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">{product.set_type}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">Color:</span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">{product.color}</span>
+              </p>
+            </div>
 
             <div className="mt-3">
               {product.discount ? (
@@ -160,35 +168,22 @@ const ProductDetailsPage = () => {
                   </span>
                 </>
               ) : (
-                <span className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                <span className="text-2xl font-bold text-amber-600">
                   {product.price_in_tk}৳
                 </span>
               )}
             </div>
 
-            <p className="mt-5">
+            <p className="mt-5 leading-relaxed">
               {product.description || "No description available."}
             </p>
 
-            {/* Size, Color, Quantity */}
+            {/* Color, Quantity */}
             <div className="mt-4 flex gap-4">
-              <select
-                value={size}
-                onChange={(e) => setSize(e.target.value)}
-                className="border rounded-lg px-3 py-2 dark:bg-gray-700 dark:text-gray-100 w-1/3"
-              >
-                <option value="">Select Size</option>
-                {product.sizes?.split(",").map((s) => (
-                  <option key={s} value={s.trim()}>
-                    {s.trim()}
-                  </option>
-                ))}
-              </select>
-
               <select
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
-                className="border rounded-lg px-3 py-2 dark:bg-gray-700 dark:text-gray-100 w-1/3"
+                className="border rounded-lg px-3 py-2 dark:bg-gray-700 dark:text-gray-100 w-1/2"
               >
                 <option value="">Select Color</option>
                 {product.color?.split(",").map((c) => (
@@ -203,7 +198,7 @@ const ProductDetailsPage = () => {
                 min={1}
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="border rounded-lg px-3 py-2 dark:bg-gray-700 dark:text-gray-100 w-1/3"
+                className="border rounded-lg px-3 py-2 dark:bg-gray-700 dark:text-gray-100 w-1/2"
                 placeholder="Quantity"
               />
             </div>
@@ -219,7 +214,7 @@ const ProductDetailsPage = () => {
 
               <a
                 href={`https://wa.me/8801617555633?text=${encodeURIComponent(
-                  `👤 Name: \n📞 Phone: \n🏠 Address: \n📦 Product: ${product.product_name}\n🆔 Code: ${product.sku}\n📏 Size: ${size || "N/A"}\n🎨 Color: ${color || "N/A"}\n🔢 Quantity: ${quantity}`
+                  `👤 Name: \n📞 Phone: \n🏠 Address: \n📦 Product: ${product.product_name}\n🆔 Code: ${product.sku}\n🎨 Color: ${color || "N/A"}\n🔢 Quantity: ${quantity}`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

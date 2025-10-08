@@ -66,41 +66,7 @@ const showpieceData = [
     video: "https://www.youtube.com/embed/dEfGhIjK04",
     discount: false,
     discount_price: 4500,
-  },
-  {
-    brand: "Barakah Shop",
-    product_name: "Resin Buddha Statue",
-    sku: "BS-SP-005",
-    size: "Medium",
-    material: "Resin",
-    category: "Spiritual Showpiece",
-    color: "Olive Green",
-    style: "Handmade",
-    occasion: "Meditation Room",
-    price_in_tk: 1900,
-    image:
-      "https://images-eu.ssl-images-amazon.com/images/I/51QvQk+yLSL._AC_UL600_SR600,600_.jpg",
-    video: "https://www.youtube.com/embed/eFgHiJkL05",
-    discount: true,
-    discount_price: 1650,
-  },
-  {
-    brand: "Ethnic Decor",
-    product_name: "Terracotta Owl Pair",
-    sku: "ED-SP-006",
-    size: "Small",
-    material: "Terracotta",
-    category: "Ethnic Art",
-    color: "Rust Orange",
-    style: "Traditional",
-    occasion: "Shelf Decor / Gift",
-    price_in_tk: 2800,
-    image:
-      "https://m.media-amazon.com/images/I/71QXo0Vd5PL._AC_SL1500_.jpg",
-    video: "https://www.youtube.com/embed/fGhIjKlM06",
-    discount: false,
-    discount_price: 2800,
-  },
+  }
 ];
 
 export default showpieceData;

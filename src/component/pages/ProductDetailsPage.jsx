@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import menData from "../../DB/MenDb";
 import bdData from "../../DB/Db";
@@ -26,6 +26,18 @@ const ProductDetailsPage = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [location, setLocation] = useState("");
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
+
+  useEffect(() => {
+    if (location.toLowerCase().includes("dhaka")) {
+      setDeliveryCharge(60);
+    } else if (location.trim() !== "") {
+      setDeliveryCharge(110);
+    } else {
+      setDeliveryCharge(0);
+    }
+  }, [location]);
 
   if (!product)
     return (
@@ -42,12 +54,51 @@ const ProductDetailsPage = () => {
     ? `${product.video}?autoplay=1`
     : "https://www.youtube.com/embed/KdxvBcuUumw?autoplay=1";
 
+  // ✅ Custom professional alert
+  const showAlert = (message) => {
+    const alertBox = document.createElement("div");
+    alertBox.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        color: #333;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 9999;
+        text-align: center;
+        font-family: sans-serif;
+      ">
+        <h3 style="margin-bottom: 10px; color: #d97706;">⚠️ রঙ নির্বাচন করুন!</h3>
+        <p style="font-size: 14px; color: #555;">
+          ${message}
+        </p>
+        <button id="closeAlert" style="
+          margin-top: 15px;
+          background: #d97706;
+          color: white;
+          border: none;
+          padding: 8px 18px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 14px;
+        ">ঠিক আছে</button>
+      </div>
+    `;
+    document.body.appendChild(alertBox);
+    document.getElementById("closeAlert").onclick = () => alertBox.remove();
+  };
+
+  // ✅ Modified handleBuyNow
   const handleBuyNow = () => {
     if (!color) {
-      alert("Please select a color!");
+      showAlert("অনুগ্রহ করে একটি কালার সিলেক্ট করুন, তারপর “Buy Now” চাপুন।");
       return;
     }
-    navigate("/order", { state: { product, color, quantity } });
+    navigate("/order", { state: { product, color, quantity, location, deliveryCharge } });
   };
 
   return (
@@ -77,7 +128,9 @@ const ProductDetailsPage = () => {
                     src={img}
                     alt={`thumb-${idx}`}
                     className={`w-20 h-20 object-cover rounded-lg cursor-pointer flex-shrink-0 border-2 ${
-                      mainImage === img ? "border-blue-600" : "border-gray-300 dark:border-gray-600"
+                      mainImage === img
+                        ? "border-blue-600"
+                        : "border-gray-300 dark:border-gray-600"
                     }`}
                     onClick={() => setMainImage(img)}
                   />
@@ -140,20 +193,36 @@ const ProductDetailsPage = () => {
 
             <div className="space-y-1 text-base">
               <p>
-                <span className="font-semibold text-gray-700 dark:text-gray-300">Brand:</span>{" "}
-                <span className="text-blue-600 dark:text-blue-400">{product.brand}</span>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">
+                  Brand:
+                </span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  {product.brand}
+                </span>
               </p>
               <p>
-                <span className="font-semibold text-gray-700 dark:text-gray-300">Fabric:</span>{" "}
-                <span className="text-blue-600 dark:text-blue-400">{product.fabric}</span>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">
+                  Fabric:
+                </span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  {product.fabric}
+                </span>
               </p>
               <p>
-                <span className="font-semibold text-gray-700 dark:text-gray-300">Type:</span>{" "}
-                <span className="text-blue-600 dark:text-blue-400">{product.set_type}</span>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">
+                  Type:
+                </span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  {product.set_type}
+                </span>
               </p>
               <p>
-                <span className="font-semibold text-gray-700 dark:text-gray-300">Color:</span>{" "}
-                <span className="text-blue-600 dark:text-blue-400">{product.color}</span>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">
+                  Color:
+                </span>{" "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  {product.color}
+                </span>
               </p>
             </div>
 
@@ -174,9 +243,71 @@ const ProductDetailsPage = () => {
               )}
             </div>
 
-            <p className="mt-5 leading-relaxed">
-              {product.description || "No description available."}
-            </p>
+            {/* ✅ Description fixed */}
+            <div className="mt-5 p-5 rounded-lg shadow-md border bg-white dark:bg-gray-800">
+              <h2 className="text-lg font-semibold mb-3 text-amber-600 flex items-center gap-2">
+                📝 প্রোডাক্ট বিবরণ
+              </h2>
+
+              {product.description && product.description.trim() !== "" ? (
+                <p className="leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                  {product.description}
+                </p>
+              ) : (
+                <div
+                  className="p-4 rounded-lg border-l-4 bg-amber-50 border-amber-500 text-amber-800"
+                  role="alert"
+                >
+                  <strong className="font-medium">বিবরণ অনুপস্থিত!</strong>
+                  <p className="mt-1 text-sm">
+                    এই প্রোডাক্টের বিস্তারিত বিবরণ বর্তমানে পাওয়া যায়নি।
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Delivery Info Section */}
+            <div
+              className={`mt-6 p-5 rounded-lg shadow-md border ${
+                isLight
+                  ? "bg-white border-gray-200"
+                  : "bg-gray-800 border-gray-700"
+              }`}
+            >
+              <p className="text-lg font-semibold text-green-600">
+                💸 অগ্রিম কোনো টাকা দিতে হবে না।
+              </p>
+              <p className="text-base mt-1 text-gray-700 dark:text-gray-300">
+                পণ্য হাতে পেয়ে দেখে মূল্য পরিশোধ করতে পারবেন।
+              </p>
+              <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                <span className="font-semibold text-amber-600">
+                  🚚 ডেলিভারি চার্জ:
+                </span>{" "}
+                ঢাকার ভিতরে{" "}
+                <span className="font-semibold text-green-600">৬০৳</span> এবং ঢাকার বাইরে{" "}
+                <span className="font-semibold text-green-600">১১০৳</span>।
+              </div>
+            </div>
+
+            {/* Address Input */}
+            <div className="mt-4">
+              <input
+                type="text"
+                placeholder="আপনার ঠিকানা লিখুন"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="border rounded-lg px-3 py-2 w-full dark:bg-gray-700 dark:text-gray-100"
+              />
+              {deliveryCharge > 0 && (
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                  ডেলিভারি চার্জ:{" "}
+                  <span className="font-semibold text-green-600">
+                    {deliveryCharge}৳
+                  </span>
+                </p>
+              )}
+            </div>
 
             {/* Color, Quantity */}
             <div className="mt-4 flex gap-4">
@@ -214,7 +345,9 @@ const ProductDetailsPage = () => {
 
               <a
                 href={`https://wa.me/8801617555633?text=${encodeURIComponent(
-                  `👤 Name: \n📞 Phone: \n🏠 Address: \n📦 Product: ${product.product_name}\n🆔 Code: ${product.sku}\n🎨 Color: ${color || "N/A"}\n🔢 Quantity: ${quantity}`
+                  `👤 Name: \n📞 Phone: \n🏠 Address: ${location}\n📦 Product: ${product.product_name}\n🆔 Code: ${product.sku}\n🎨 Color: ${
+                    color || "N/A"
+                  }\n🔢 Quantity: ${quantity}\n💰 Delivery Charge: ${deliveryCharge}৳`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

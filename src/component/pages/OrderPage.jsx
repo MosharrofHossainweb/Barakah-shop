@@ -9,22 +9,38 @@ const OrderPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { product, size, color: initialColor, quantity } = location.state || {};
+  const { product, size, color: initialColor, quantity, address: passedAddress } =
+    location.state || {};
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(passedAddress || "");
   const [qty, setQty] = useState(quantity || 1);
   const [color, setColor] = useState(initialColor || "");
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
 
-  // 🟢 Load saved data from localStorage (auto-fill)
+  // Load saved data
   useEffect(() => {
     const savedName = localStorage.getItem("customer_name");
     const savedPhone = localStorage.getItem("customer_phone");
     const savedAddress = localStorage.getItem("customer_address");
+
     if (savedName) setName(savedName);
     if (savedPhone) setPhone(savedPhone);
-    if (savedAddress) setAddress(savedAddress);
+    if (!address && savedAddress) setAddress(savedAddress);
   }, []);
+
+  // Detect Dhaka / Outside Dhaka
+  useEffect(() => {
+    if (address) {
+      const isDhaka =
+        address.toLowerCase().includes("dhaka") ||
+        address.toLowerCase().includes("ঢাকা");
+      setDeliveryCharge(isDhaka ? 60 : 110);
+    } else {
+      setDeliveryCharge(0);
+    }
+  }, [address]);
 
   if (!product)
     return (
@@ -35,34 +51,36 @@ const OrderPage = () => {
       </p>
     );
 
-  // 🟢 WhatsApp message
+  const basePrice = product.discount ? product.discount_price : product.price_in_tk;
+  const subtotal = basePrice * qty;
+  const total = subtotal + deliveryCharge;
+
   const message = `🛒 *New Order* 🛒
 
 👤 Name: ${name || "Not provided"}
 📞 Phone: ${phone || "Not provided"}
 🏠 Address: ${address || "Not provided"}
+
 📦 Product: ${product.product_name}
 🆔 Code: ${product.sku}
 📏 Size: ${size || "N/A"}
 🎨 Color: ${color || "N/A"}
 🔢 Quantity: ${qty}
-💰 Total: ${
-    product.discount
-      ? product.discount_price * qty
-      : product.price_in_tk * qty
-  }৳`;
+
+💸 Subtotal: ${subtotal}৳
+🚚 Delivery Charge: ${deliveryCharge}৳
+💰 Total: ${total}৳`;
 
   const handleWhatsApp = () => {
     if (!name || !phone || !address) {
-      alert("অনুগ্রহ করে সব তথ্য পূরণ করুন।");
+      alert("⚠️ অনুগ্রহ করে নাম, ফোন ও ঠিকানা পূরণ করুন।");
       return;
     }
     if (!color) {
-      alert("অনুগ্রহ করে কালার সিলেক্ট করুন।");
+      alert("🎨 অনুগ্রহ করে কালার সিলেক্ট করুন।");
       return;
     }
 
-    // 🟢 Save data to localStorage (auto-fill for next order)
     localStorage.setItem("customer_name", name);
     localStorage.setItem("customer_phone", phone);
     localStorage.setItem("customer_address", address);
@@ -81,7 +99,6 @@ const OrderPage = () => {
               আপনার অর্ডার কনফার্ম করুন
             </h1>
 
-            {/* Product Summary */}
             <div className="flex flex-col md:flex-row gap-5 items-center border-b pb-5 mb-6">
               <img
                 src={product.image}
@@ -94,8 +111,7 @@ const OrderPage = () => {
                 <p><span className="font-medium">সাইজ:</span> {size || "N/A"}</p>
                 <p><span className="font-medium">কালার:</span> {color || "N/A"}</p>
                 <p>
-                  <span className="font-medium">দাম:</span>{" "}
-                  {product.discount ? product.discount_price : product.price_in_tk}৳
+                  <span className="font-medium">দাম:</span> {basePrice}৳
                 </p>
               </div>
             </div>
@@ -124,22 +140,6 @@ const OrderPage = () => {
                 className="border rounded-lg px-4 py-3 dark:bg-gray-700 dark:text-gray-100"
               ></textarea>
 
-              {/* Color Selection */}
-              {product.color && (
-                <select
-                  value={color}
-                  onChange={(e) => setColor(e.target.value)}
-                  className="border rounded-lg px-4 py-3 dark:bg-gray-700 dark:text-gray-100"
-                >
-                  <option value="">কালার নির্বাচন করুন</option>
-                  {product.color.split(",").map((c) => (
-                    <option key={c} value={c.trim()}>
-                      {c.trim()}
-                    </option>
-                  ))}
-                </select>
-              )}
-
               <input
                 type="number"
                 min={1}
@@ -148,18 +148,25 @@ const OrderPage = () => {
                 className="border rounded-lg px-4 py-3 dark:bg-gray-700 dark:text-gray-100"
               />
 
-              {/* Live Preview */}
+              <div className="bg-amber-50 dark:bg-gray-700 p-4 rounded-lg border">
+                <p className="text-gray-800 dark:text-gray-100 font-medium">
+                  🟢 আগাম কোনো টাকা দিতে হবে না। পণ্য হাতে পেয়ে দেখে মূল্য পরিশোধ করতে পারবেন।
+                </p>
+                <p className="text-gray-800 dark:text-gray-100 mt-1">
+                  🚚 ঢাকার ভিতরে ডেলিভারি চার্জ: <span className="font-semibold">৬০৳</span> |
+                  ঢাকার বাইরে: <span className="font-semibold">১১০৳</span>
+                </p>
+              </div>
+
               <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border">
                 <p className="text-red-600 dark:text-red-400 font-medium mb-2">
-                  ℹ️ উপরের তথ্যগুলো সঠিক কিনা যাচাই করুন। এই মেসেজটি WhatsApp-এ পাঠালে
-                  আপনার অর্ডার কনফার্ম হবে ✅
+                  ℹ️ উপরের তথ্যগুলো সঠিক কিনা যাচাই করুন। নিচের মেসেজটি WhatsApp-এ পাঠালে আপনার অর্ডার কনফার্ম হবে ✅
                 </p>
                 <pre className="text-sm whitespace-pre-wrap text-gray-800 dark:text-gray-100">
                   {message}
                 </pre>
               </div>
 
-              {/* Buttons */}
               <button
                 onClick={handleWhatsApp}
                 className="w-full py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition"

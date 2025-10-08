@@ -66,41 +66,8 @@ const organicData = [
     video: "https://www.youtube.com/embed/dEfG101Oil",
     discount: false,
     discount_price: 600,
-  },
-  {
-    brand: "Green Farm",
-    product_name: "Organic Turmeric Powder",
-    sku: "GF-OG-005",
-    size: "200 GM",
-    material: "Turmeric Root",
-    category: "Spices",
-    color: "Golden Yellow",
-    style: "Stone-Ground",
-    occasion: "Cooking / Health Remedy",
-    price_in_tk: 140,
-    image:
-      "https://img.freepik.com/free-photo/wooden-bowl-full-turmeric-powder_114579-77665.jpg?semt=ais_incoming&w=740&q=80",
-    video: "https://www.youtube.com/embed/eFgH112Turmeric",
-    discount: true,
-    discount_price: 120,
-  },
-  {
-    brand: "Ethnic Greens",
-    product_name: "Organic Spinach (Palong Shak)",
-    sku: "EG-OG-006",
-    size: "500 GM",
-    material: "Leafy Vegetable",
-    category: "Fresh Vegetables",
-    color: "Dark Green",
-    style: "Freshly Harvested",
-    occasion: "Salad / Curry",
-    price_in_tk: 90,
-    image:
-      "https://img.freepik.com/free-photo/fresh-spinach-bunch_1150-7925.jpg?semt=ais_incoming&w=740&q=80",
-    video: "https://www.youtube.com/embed/fGhI113Spinach",
-    discount: false,
-    discount_price: 90,
-  },
+  }
+ 
 ];
 
 export default organicData;
